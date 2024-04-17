@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "./components/Button";
 import Alert from "./components/ComponentAcceptingCHildren";
 import ListGroup from "./components/ListGroup";
@@ -5,11 +6,13 @@ import ParameterizedLabel from "./components/ParameterizedLabel";
 
 function App() {
   let items = ["Mumbai", "Pune", "Delhi", "Bangalore"];
-  let selectedText = "Not Clicked";
+  const [alertVisible, setAlertVisibility] = useState(false);
+  const [selectedText, setSelectedText] = useState("Not Clicked");
   const handleSelectItem = (item: string) => {
     console.log(item);
-    selectedText = item;
+    setSelectedText(item);
   };
+
   return (
     <div>
       {/*  */}
@@ -19,11 +22,13 @@ function App() {
           heading="Cities"
           onSelectItem={handleSelectItem}
         />
-        <Alert>
-          Hello <span> World</span>
-        </Alert>
+        {alertVisible && (
+          <Alert onClose={() => setAlertVisibility(false)}>
+            Hello <span> World</span>
+          </Alert>
+        )}
         <ParameterizedLabel text={selectedText}></ParameterizedLabel>
-        <Button></Button>
+        <Button onclick={() => setAlertVisibility(true)}></Button>
       </>
     </div>
   );
